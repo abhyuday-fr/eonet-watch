@@ -65,3 +65,15 @@ func (c *Cache) cleanup() {
 		c.mu.Unlock()
 	}
 }
+
+// GetStale returns a value even if expired
+// used as fallback when upstream fails.
+func (c *Cache) GetStale(key string) (any, bool) {
+	c.mu.RLock()
+	defer c.mu.RUnlock()
+	e, ok := c.entries[key]
+	if !ok {
+		return nil, false
+	}
+	return e.value, true
+}

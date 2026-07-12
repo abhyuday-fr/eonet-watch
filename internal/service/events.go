@@ -67,6 +67,9 @@ func (s *EventService) GetEvents(params EventsParams) (*eonet.EventsResponse, er
 
 	result, err := s.client.GetEvents(filter)
 	if err != nil {
+		if stale, ok := s.cache.GetStale(cacheKey); ok {
+			return stale.(*eonet.EventsResponse), nil
+		}
 		return nil, fmt.Errorf("service: failed to get events: %w", err)
 	}
 
