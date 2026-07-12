@@ -6,6 +6,7 @@ A production-grade Earth natural events dashboard
 Real-time tracking of wildfires, storms, volcanoes, earthquakes, and more.. powered by NASA's EONET API.
 
 # Demo video
+![Demo video](demo.mp4)
 
 # Build and run
 1. Clone the repository
