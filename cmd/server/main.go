@@ -3,9 +3,13 @@ package main
 import (
 	"fmt"
 	"log"
+	"net/http"
 	"os"
 
 	"github.com/abhyuday-fr/eonet-watch/internal/config"
+	"github.com/abhyuday-fr/eonet-watch/internal/handler"
+	"github.com/go-chi/chi/v5"
+	chimiddleware "github.com/go-chi/chi/v5/middleware"
 	"github.com/joho/godotenv"
 )
 
@@ -20,6 +24,23 @@ func main() {
 		os.Exit(1)
 	}
 
-	fmt.Printf("EONET Watch starting on port %d\n", cfg.Port)
-	fmt.Printf("EONET API: %s\n", cfg.EONETBaseURL)
+	r := chi.NewRouter()
+
+	r.Use(chimiddleware.Logger)    // logs every request
+	r.Use(chimiddleware.Recoverer) // catches panics, returns 500 instead of crashing
+
+	// wire up handlers
+	eventHandler := handler.NewEventHandler()
+	r.Get("/api/v1/events", eventHandler.List)
+
+	healthChecker := handler.NewHealthChecker()
+	r.Get("/api/v1/health", healthChecker.Check)
+
+	addr := fmt.Sprintf(":%d", cfg.Port)
+	log.Printf("Server listening on %s", addr)
+
+	if err := http.ListenAndServe(addr, r); err != nil {
+		log.Fatalf("Server failed: %v", err)
+	}
+
 }
