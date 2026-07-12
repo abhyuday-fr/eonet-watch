@@ -1,6 +1,6 @@
 # 🗺  EONET Watch
 
-<img src="frontend/public/favicon.svg" width="60" height="60">
+<img src="frontend/public/favicon.svg" width="90" height="90">
 
 A production-grade Earth natural events dashboard
 Real-time tracking of wildfires, storms, volcanoes, earthquakes, and more.. powered by NASA's EONET API.
