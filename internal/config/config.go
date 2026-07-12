@@ -4,11 +4,13 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"strings"
 )
 
 type Config struct {
-	Port         int
-	EONETBaseURL string
+	Port           int
+	EONETBaseURL   string
+	AllowedOrigins []string
 }
 
 func Load() (*Config, error) {
@@ -27,8 +29,14 @@ func Load() (*Config, error) {
 		return nil, fmt.Errorf("EONET_BASE_URL is required but not set")
 	}
 
+	origins := os.Getenv("ALLOWED_ORIGINS")
+	if origins == "" {
+		origins = "http://localhost:5173"
+	}
+
 	return &Config{
-		Port:         port,
-		EONETBaseURL: eonetURL,
+		Port:           port,
+		EONETBaseURL:   eonetURL,
+		AllowedOrigins: strings.Split(origins, ","),
 	}, nil
 }
