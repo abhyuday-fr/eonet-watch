@@ -7,9 +7,7 @@ Real-time tracking of wildfires, storms, volcanoes, earthquakes, and more.. powe
 
 # Demo video
 
-<video width="320" height="240" controls>
-  <source src="https://github.com/user-attachments/assets/b56debe3-fe3b-460a-bbf6-c50430ad0e0a" type="video/mp4">
-</video>   
+https://github.com/user-attachments/assets/b56debe3-fe3b-460a-bbf6-c50430ad0e0a 
 
 # Build and run
 1. Clone the repository
